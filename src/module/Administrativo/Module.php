@@ -1,15 +1,31 @@
 <?php
+
+/**
+ * Created by PhpStorm.
+ * User: felipe.agustoni
+ * Date: 14/06/2017
+ * Time: 16:47
+ */
+
 namespace Administrativo;
+
+use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
+
 
 class Module
 {
-    public function getConfig()
-    {
+    public function onBootstrap(MvcEvent $e){
+        $eventManager = $e->getApplication()->getEventManager();
+        $moduleRouteListener = new ModuleRouteListener();
+        $moduleRouteListener->attach($eventManager);
+    }
+
+    public function getConfig(){
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getAutoloaderConfig()
-    {
+    public function getAutoLoaderConfig(){
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
@@ -18,4 +34,5 @@ class Module
             ),
         );
     }
+
 }
