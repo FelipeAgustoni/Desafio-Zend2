@@ -48,42 +48,40 @@ echo $this->form()->openTag($form);
 <script>
 
     $(document).ready(function () {
-        'use strict';
+        //'use strict';
         cancelar();
         siglaCaixaAlta();
-
-        function siglaCaixaAlta() {
-            $('#sgCurso').on('blur', function () {
-                $(this).val($(this).val().toUpperCase());
-            });
-        }
-        
-        function validaCampos() {
-            var elemento = ['input'];
-            $('form ' + elemento).each(function () {
-                if ($(this).attr('required') && !$.trim(this).val()){
-                    $(this).parents('div').addClass('has-error');
-                }
-            })
-        }
-        
-        function voltarTopo() {
-            $('html, body').animate({scrollTop:0}, 'slow');
-        }
-
-        function cancelar() {
-            $('#cancelar').on('click', function () {
-                window.location.assign('/');
-            });
-        }
-
-        function salvar() {
-            $('#salvar').on('click', function () {
-                validaCampos();
-                voltarTopo();
-            });
-        }
-
     });
+
+    function siglaCaixaAlta() {
+        $('#sgCurso').on('blur', function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+    }
+
+    function validaCampos() {
+        var elemento = ['input'];
+        $('form ' + elemento).each(function () {
+            if ($(this).attr('required') && !$.trim(this).val()){
+                $(this).parents('div').addClass('has-error');
+            }
+        });
+    }
+
+    function voltarTopo() {
+        $('html, body').animate({scrollTop:0}, 'slow');
+    }
+
+    function cancelar() {
+        $('#cancelar').on('click', function () {
+            window.location.assign('/');
+        });
+    }
+
+    function salvar() {
+        $('#salvar').on('click', function () {
+            validaCampos();
+        });
+    }
 
 </script>

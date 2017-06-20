@@ -1,19 +1,46 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: felipe.agustoni
- * Date: 19/06/2017
- * Time: 11:12
- */
 
 namespace Administrativo\Service;
 
+use Doctrine\ORM\EntityManager;
+use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\View\Model\ViewModel;
 
-
-class CursoService extends AbstractService
+class CursoService
 {
+    protected $em;
+    protected $entity;
 
+    public function __construct(EntityManager $em)
+    {
+        $this->em  = $em;
+    }
+
+    public function save(Array $data = array()){
+        if(isset($data['id'])){
+            $entity = $this->em->getReference($this->entity, $data['id']);
+            $hydrator = new ClassMethods();
+            $hydrator->hydrate($data, $entity);
+        }else{
+            $entity = new $this->entity($data);
+        }
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return $entity;
+    }
+
+    public function remove(Array $data = array()){
+        $entity = $this->em->getRepository($this->entity->findOneBy($data));
+
+        if($entity){
+            $this->em->remove($entity);
+            $this->em->flush();
+
+            return $entity;
+        }
+    }
 
 
 }

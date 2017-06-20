@@ -9,7 +9,7 @@
 
 namespace Administrativo\Entity;
 
-
+use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
  * Curso
@@ -17,7 +17,7 @@ namespace Administrativo\Entity;
  * @ORM\Table(name="DESAFIO-ZF.TB_CURSO")
  * @ORM\Entity(repositoryClass="Administrativo\Entity\Repository\CursoRepository")
  */
-class Curso extends AbstractEntity
+class Curso
 {
 
     /**
@@ -44,6 +44,37 @@ class Curso extends AbstractEntity
      * @ORM\Column(name="sg_curso", type="string", length=10, nullable=false)
      */
     private $sgCurso;
+
+    protected $associations = array();
+
+    public function __construct(array $options = array())
+    {
+        $hydrator = new ClassMethods;
+        $hydrator->hydrate($options, $this);
+    }
+
+    public function toArray()
+    {
+        $hydrator = new ClassMethods();
+        return $hydrator->extract($this);
+    }
+
+    public function getAssociations()
+    {
+        return $this->associations;
+    }
+
+    public function resolveAssociations($entityManager)
+    {
+        $associations = $this->getAssociations();
+        foreach ($associations as $class => $columns) {
+            foreach ($columns as $column) {
+                $methodGet = 'get' . ucfirst($column);
+                $methodSet = 'set' . ucfirst($column);
+                $this->$methodSet($entityManager->getReference($class, $this->$methodGet()));
+            }
+        }
+    }
 
     /**
      * @return int
@@ -108,4 +139,6 @@ class Curso extends AbstractEntity
     {
         $this->sgCurso = $sgCurso;
     }
+
+
 }
