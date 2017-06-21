@@ -51,6 +51,9 @@ echo $this->form()->openTag($form);
         //'use strict';
         cancelar();
         siglaCaixaAlta();
+        validaCampos();
+        voltarTopo();
+        limparCampos();
     });
 
     function siglaCaixaAlta() {
@@ -60,12 +63,17 @@ echo $this->form()->openTag($form);
     }
 
     function validaCampos() {
-        var elemento = ['input'];
+        var elemento = ['input', 'select'];
+        var valida = true;
+
         $('form ' + elemento).each(function () {
-            if ($(this).attr('required') && !$.trim(this).val()){
-                $(this).parents('div').addClass('has-error');
+            $(this).parent('div').removeClass('has-error');
+            if ($(this).attr('required') && !$.val()){
+                $(this).parent('div').addClass('has-error');
+                valida = false;
             }
         });
+        return valida;
     }
 
     function voltarTopo() {
@@ -83,5 +91,28 @@ echo $this->form()->openTag($form);
             validaCampos();
         });
     }
+
+    function limparCampos() {
+
+        $('#limpar').click(function () {
+
+            var campos = ['input', 'select'];
+
+            $('form ' + campos).each(function (key, value) {
+                if (($(value).hasClass('usuario-consulta'))) {
+                    $(this).val("");
+                }
+            });
+        });
+    }
+
+//    function limparCampos(elemento) {
+//        $('form' + elemento).each(function () {
+//            $(this).val('');
+//            if ($(this).prop('type') == 'RADIO' || $(this).prop('type') == 'CHECKBOX'){
+//                $(this).prop('check', false);
+//            }
+//        });
+//    }
 
 </script>

@@ -31,7 +31,7 @@ class CadastrarCurso extends Form
         // Nome
         $nmCurso = new Text('nmCurso');
         $nmCurso->setLabel('Nome: ')->setAttributes(array(
-            'class' => 'form-control',
+            'class' => 'form-control usuario-consulta',
             'title' => 'Informe o nome do curso',
             'data-toggle' => 'tooltip',
             'id' => 'nmCurso',
@@ -44,7 +44,7 @@ class CadastrarCurso extends Form
         // Sigla
         $sgCurso = new Text('sgCurso');
         $sgCurso->setLabel('Sigla: ')->setAttributes(array(
-            'class' => 'form-control',
+            'class' => 'form-control usuario-consulta',
             'title' => 'Sigla',
             'data-toggle' => 'tooltip',
             'id' => 'sgCurso',
@@ -60,7 +60,7 @@ class CadastrarCurso extends Form
         $nuCargaHoraria->setLabel('Carga Horaria: ')
 
             ->setAttributes(array(
-                'class' => 'form-control',
+                'class' => 'form-control usuario-consulta',
                 'title' => 'Informe a carga horaria',
                 'data-toggle' => 'tooltip',
                 'id' => 'nuCargaHoraria',
